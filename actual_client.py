@@ -14,7 +14,10 @@ server_addr = ('localhost', 13337)
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 try:
     sock.connect(server_addr)
+    duck = sock.recv(14434).decode()
+    print(duck)
     rprint("Connected")
+    rprint("Say Something or type quit to exit")
 except:
     rprint("Connection Failed")
     exit(0)

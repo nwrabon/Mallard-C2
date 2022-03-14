@@ -11,6 +11,9 @@ commands = {}
 
 # HTTP server
 
+file = open('duck.ansi', 'r')
+duck = file.read()
+file.close()
 
 #===========SERVER CREATION=============
 print('CSOC C2 Server')
@@ -23,10 +26,11 @@ s.listen(5)
 
 def handle_connection(conn, ip):
     print(f"Connected by {ip}")
+    conn.send(duck.encode())
     msg = conn.recv(1024).decode()
 
     #act as echo server
-    while msg != 'quit': 
+    while msg != 'quit' and len(msg) != 0: 
         print("Received_data: %s" % msg)
 
         conn.send(msg.encode())
