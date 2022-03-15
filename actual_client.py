@@ -28,13 +28,12 @@ while True:
     if msg == 'quit':
         sock.close()
         exit(0)
-    elif len(msg) != 0:
+    elif msg != '':
         sock.send(msg.encode())
-        data = sock.recv(1024).decode()
-        rprint("Received_data: [green1]%s" % data)
-        # TODO: handle commands coming back
+        msg = sock.recv(1024).decode()
+        rprint("Received_msg: [green1]%s" % msg)
 
-    # if data.decode() == "clipboard":
+    # if msg.decode() == "clipboard":
     # text = clipboard.paste()
     # sock.send(text.encode())
 

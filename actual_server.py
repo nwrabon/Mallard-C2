@@ -1,10 +1,14 @@
 import aiohttp
+from rich import print as rprint
 import threading
 from aiohttp import web
 from datetime import datetime
 import time
 import socket
 import sys
+
+# list of active hosts
+hosts = []
 
 # Holds post-exploitation commands for the target host that the operator will enter
 commands = {}
@@ -25,17 +29,18 @@ s.bind((HOST, PORT))
 s.listen(5)
 
 def handle_connection(conn, ip):
-    print(f"Connected by {ip}")
+    rprint(f"[bold green]Connected by {ip}")
     conn.send(duck.encode())
     msg = conn.recv(1024).decode()
 
     #act as echo server
     while msg != 'quit' and len(msg) != 0: 
-        print("Received_data: %s" % msg)
+        rprint("Received_data: [green]%s" % msg)
 
         conn.send(msg.encode())
         msg = conn.recv(1024).decode()
     conn.close()
+    rprint("[red]Connection Closed: %s" %str(ip))
 
 
 # def init_server():
