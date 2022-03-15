@@ -1,7 +1,10 @@
 from rich import print as rprint
+from rich.table import Table
 from rich.prompt import Prompt as prompt
 import clipboard
 import socket
+import pickle
+import codecs
 
 
 # Client Side 
@@ -30,8 +33,15 @@ while True:
         exit(0)
     elif msg != '':
         sock.send(msg.encode())
-        msg = sock.recv(1024).decode()
-        rprint("Received_msg: [green1]%s" % msg)
+
+        # Special case with object being returned instead of string
+        if msg == 'hosts':
+            # decode object and output it
+            unpickled = pickle.loads(codecs.decode(sock.recv(2048*10), "base64"))
+            rprint(unpickled)
+        else:
+            output = sock.recv(1024).decode()
+            rprint("[green]%s" %output)
 
     # if msg.decode() == "clipboard":
     # text = clipboard.paste()

