@@ -6,20 +6,21 @@ import codecs
 # handle hosts command (show all hosts)
 # @pre
 #   conn is socket connected where table will be sent
-#   hosts is dictionary in form {'ip' : 'status'}
+#   hosts is a list of tuples in form [(id, ip, status)] 
 # TODO if host is inactive show data in red if active green
 def send_hosts_table(conn, hosts):
     table = Table(title="Hosts", show_lines=True)
+    table.add_column("ID", justify='right')
     table.add_column("IP", justify="left")
     table.add_column("Status", justify='right')
 
-    for i,j in hosts.items():
-        table.add_row(i, j)
+    for i in hosts:
+        
+        table.add_row(str(i[0]), i[1], i[2])
           
         # encodes obj to bytes to send over network
     pickled = codecs.encode(pickle.dumps(table), "base64")
     conn.send(pickled)
-
 
 
 

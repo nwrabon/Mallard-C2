@@ -1,10 +1,11 @@
 from rich import print as rprint
-from rich.table import Table
 from rich.prompt import Prompt as prompt
-import clipboard
+
 import socket
 import pickle
 import codecs
+
+import os
 
 
 # Client Side 
@@ -31,6 +32,8 @@ while True:
     if msg == 'quit':
         sock.close()
         exit(0)
+    elif msg == 'clear':
+        os.system('clear')
     elif msg != '':
         sock.send(msg.encode())
 

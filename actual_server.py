@@ -1,6 +1,5 @@
 from rich import print as rprint
 from datetime import datetime
-from aiohttp import web
 
 from commands import *
 
@@ -11,13 +10,13 @@ import socket
 import sys
 
 # list of hosts
-host_dict = {'555.55.555.55' : 'active'}
+host_dict = [(1, '555.55.555.55',  'active')]
 
 # Holds post-exploitation commands for the target host that the operator will enter
 commands = [] 
 
 # load ascii art
-file = open('duck.ansi', 'r')
+file = open('./art/duck.ansi', 'r')
 duck = file.read()
 file.close()
 
