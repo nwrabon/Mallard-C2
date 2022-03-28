@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+
+	<title>CSOC C2 - Clients</title>
+
+{% endblock %}
+
+
+{% block main %}
+
+<main id="main" class="main">
+
+	<div class="pagetitle">
+		<h1>Hosts</h1>
+		<nav>
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a href="#">Home</a></li>
+				<li class="breadcrumb-item active">Hosts</li>
+			</ol>
+		</nav>
+	</div>
+
+	<section class="section dashboard">
+		<div class="row">
+
+			<!-- Left side columns -->
+			<div class="col-lg-8">
+				<div class="row">
+
+					<!-- Table Card -->
+					<div class="col-xxl-12 col-xl-12">
+
+						<div class="card">
+							<div class="card-body">
+								<h5 class="card-title">Table</h5>
+
+								<!-- Dark Table -->
+								<table class="table table-dark">
+									<thead>
+                                      <tr>
+                                          <th scope="col">IP</th>
+                                          <th scope="col">Checkin Time</th>
+                                          <th scope="col">Actions</th>
+                                      </tr>
+									</thead>
+									<tbody>
+                                      {% for host, checkin in hosts %}
+                                        <tr>
+                                            <td>{{ host[0] }}</td>
+                                            <td>{{ checkin }}</td>
+                                            <td>
+                                                <button type="button" class="btn btn-danger">Do Something</button>
+                                            </td>
+                                        </tr>
+                                      {% endfor %}
+									</tbody>
+								</table>
+
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+        </div>
+	</section>
+</main>
+
+{% endblock %}
