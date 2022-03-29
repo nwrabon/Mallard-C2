@@ -16,9 +16,8 @@ except:
 
 while True:
     msg = sock.recv(1024).decode()
+    print(msg)
 
     if msg == 'quit':
         sock.close()
         exit(0)
-    elif msg != '':
-        sock.send(msg.encode())

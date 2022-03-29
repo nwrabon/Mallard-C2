@@ -14,4 +14,4 @@ def clients():
 
 @view_routes.route('/payloads/<client>')
 def payloads(client):
-	return flask.render_template('payloads.html')
+	return flask.render_template('payloads.html', client=client)
