@@ -46,12 +46,12 @@
                                       </tr>
 									</thead>
 									<tbody>
-                                      {% for host, checkin in hosts %}
+                                      {% for host, sock, status in hosts %}
                                         <tr>
                                             <td>{{ host[0] }}</td>
-                                            <td>{{ checkin }}</td>
+                                            <td>TODO</td>
                                             <td>
-                                                <button type="button" class="btn btn-danger">Do Something</button>
+                                                <a class="btn btn-danger" href="/payloads/{{ host[0] }}" >Payloads</button>
                                             </td>
                                         </tr>
                                       {% endfor %}

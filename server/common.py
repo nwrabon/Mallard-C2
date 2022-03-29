@@ -1,5 +1,9 @@
 import threading
 
-# TODO fix access of global var from separate threads
+global hosts
+global sockets
+
+global num_hosts
+num_hosts = 0
+
 lock = threading.Lock()
-hosts = []
