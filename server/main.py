@@ -87,10 +87,10 @@ if __name__ == '__main__':
     file.close()
 
     # setup socket for users
-    victim_server_addr = ("localhost", 1337)
+    victim_server_addr = ("0.0.0.0", 1337)
 
     # setup socket for victim communication
-    user_server_addr = ("localhost", 1338)
+    user_server_addr = ("0.0.0.0", 1338)
 
     vs = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     vs.bind(victim_server_addr)

