@@ -36,9 +36,9 @@
                 <button type="button" class="list-group-item list-group-item-action disabled active" aria-current="true">
                   Destructive
                 </button>
-                <button type="button" class="list-group-item list-group-item-action" onclick="callAPI('test')">Blue Screen of Death</button>
-                <button type="button" class="list-group-item list-group-item-action">File Deletion</button>
-                <button type="button" class="list-group-item list-group-item-action">A fourth button item</button>
+                <button type="button" class="list-group-item list-group-item-action" onclick="getPayloadBytes('bsod')">Blue Screen of Death</button>
+                <button type="button" class="list-group-item list-group-item-action"onclick="callAPI('test')">File Deletion</button>
+                <button type="button" class="list-group-item list-group-item-action"onclick="callAPI('test')">Open Windows</button>
               </div><!-- End List group with Links and buttons -->
 
             </div>
@@ -53,9 +53,9 @@
                 <button type="button" class="list-group-item list-group-item-action active" aria-current="true">
                   Annoying
                 </button>
-                <button type="button" class="list-group-item list-group-item-action">Shake</button>
-                <button type="button" class="list-group-item list-group-item-action">Mouse Stop</button>
-                <button type="button" class="list-group-item list-group-item-action">Avoid</button>
+                <button type="button" class="list-group-item list-group-item-action"onclick="callAPI('test')">Shake</button>
+                <button type="button" class="list-group-item list-group-item-action"onclick="callAPI('test')">Mouse Stop</button>
+                <button type="button" class="list-group-item list-group-item-action"onclick="callAPI('test')">Avoid</button>
               </div><!-- End List group with Links and buttons -->
 
             </div>
@@ -70,9 +70,9 @@
                 <button type="button" class="list-group-item list-group-item-action active" aria-current="true">
                   Recon
                 </button>
-                <button type="button" class="list-group-item list-group-item-action">Get Screenshot</button>
-                <button type="button" class="list-group-item list-group-item-action">Get Clipboard</button>
-                <button type="button" class="list-group-item list-group-item-action">List Users </button>
+                <button type="button" class="list-group-item list-group-item-action"onclick="callAPI('test')">Get Screenshot</button>
+                <button type="button" class="list-group-item list-group-item-action"onclick="callAPI('test')">Get Clipboard</button>
+                <button type="button" class="list-group-item list-group-item-action"onclick="callAPI('test')">List Users </button>
               </div><!-- End List group with Links and buttons -->
 
             </div>
@@ -90,6 +90,22 @@
 {% block js %}
 
 <script type="text/javascript">
+
+function getPayloadBytes(name) {
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", '/api/payload/get', true);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send(JSON.stringify({
+      "name": name
+  }));
+
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState == XMLHttpRequest.DONE) {
+        var payload = xhr.responseText;
+        callAPI("exec:" + payload);
+    }
+  }
+}
 
 function callAPI(payload) {
   var xhr = new XMLHttpRequest();
