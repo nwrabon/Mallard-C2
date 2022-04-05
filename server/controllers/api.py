@@ -6,6 +6,7 @@ import json
 import os
 import pickle
 import codecs
+import json
 
 
 api_routes = flask.Blueprint('api', __name__)
@@ -91,7 +92,7 @@ def users_payload():
 			common.send_msg(client_sock, "users".encode())
 			users = common.recv_msg(client_sock)
 			users = pickle.loads(codecs.decode(users, "base64"))
-			return users, 200
+			return json.dumps(users), 200
 		else:
 			return "Error", 500
 	else:
@@ -99,11 +100,12 @@ def users_payload():
 
 
 @api_routes.route('/api/payload/delete', methods=['POST'])
-def delete_file(file_name):
-	msg = f'delete {file_name}'
-
+def delete_file():
 	data = json.loads(flask.request.data.decode())
 	client = data["client"]
+	file_name = data["file_name"]
+ 
+	msg = f'delete {file_name}'
 
 	if client:
 		client_sock = [host for host in common.hosts if host[0][0] == client][0][1]
