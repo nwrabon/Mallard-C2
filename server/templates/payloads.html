@@ -74,7 +74,7 @@
                 </button>
                 <button type="button" class="list-group-item list-group-item-action"onclick="getScreenshot()">Get Screenshot</button>
                 <button type="button" class="list-group-item list-group-item-action"onclick="getClipboard()" id="clipboardElem""">Get Clipboard</button>
-                <button type="button" class="list-group-item list-group-item-action"onclick="callAPI('test')">List Users </button>
+                <button type="button" class="list-group-item list-group-item-action"onclick="getUsers()" id="usersElem">List Users </button>
               </div><!-- End List group with Links and buttons -->
 
             </div>
@@ -146,6 +146,22 @@ function getClipboard() {
   xhr.onreadystatechange = function() {
     if (xhr.readyState == XMLHttpRequest.DONE) {
         var elem = document.getElementById("clipboardElem");
+        elem.innerHTML = xhr.responseText;
+    }
+  }
+}
+
+function getUsers() {
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", '/api/payload/users', true);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send(JSON.stringify({
+      "client": '{{client}}'
+  }));
+
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState == XMLHttpRequest.DONE) {
+        var elem = document.getElementById("usersElem");
         elem.innerHTML = xhr.responseText;
     }
   }
