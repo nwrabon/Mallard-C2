@@ -1,6 +1,7 @@
 from sys import platform
 import os
 import shutil
+from rich import print as rprint
 
 import PyInstaller.__main__
 
@@ -33,6 +34,7 @@ def generate_agent(serv_ip):
             '-n',
             'gen_agent.exe'
         ])
+        rprint("Payload Generated at [bold green]..\\agents\\")
 
     # cleans up unneeded files
     os.remove('gen_agent.exe.spec')

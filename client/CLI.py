@@ -8,6 +8,7 @@ import pickle
 import codecs
 import re as r
 import os
+from sys import platform
 
 import generator
 
@@ -35,11 +36,13 @@ while True:
         sock.close()
         exit(0)
     elif msg == 'clear':
-        os.system('clear')
+        if platform == 'linux':
+            os.system('clear')
+        elif platform == 'win32':
+            os.system('cls')
     elif msg[:5] == 'agent':
         serv_ip = r.search('\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}', msg)
         generator.generate_agent(serv_ip.group(0))
-        rprint("Payload Generated at [bold green]../agents/")
     elif msg != '':
         print(msg[5:])
         sock.send(msg.encode())

