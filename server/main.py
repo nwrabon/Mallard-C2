@@ -70,10 +70,10 @@ def listen_for_user_connections():
 
 
 # Handle interrupts to cleanup sockets
-# def sigint_handler(signal, frame):
-#     with common.lock:
-#         [sock.close() for sock in common.sockets]
-#     sys.exit(0)
+def sigint_handler(signal, frame):
+    with common.lock:
+        [sock.close() for sock in common.sockets]
+    sys.exit(0)
 
 
 # run web ui and handle client connections
@@ -107,6 +107,6 @@ if __name__ == '__main__':
     flask_app = flask.Flask(__name__)
     flask_app.register_blueprint(controllers.views.view_routes)
     flask_app.register_blueprint(controllers.api.api_routes)
-    flask_app.run()
+    flask_app.run(host="0.0.0.0")
 
-    #signal.signal(signal.SIGINT, sigint_handler)
+    signal.signal(signal.SIGINT, sigint_handler)
