@@ -19,13 +19,13 @@ def handle_victim_connection(conn, ip):
 
     rprint(f"[bold green]Connected by {ip}")
 
-    conn.send(duck.encode())
+    common.send_msg(conn, duck.encode())
 
 
 def handle_user_connection(conn, ip):
     rprint(f"[bold green] Connected by {ip}")
 
-    conn.send(duck.encode())
+    common.send_msg(conn, duck.encode())
 
     msg = conn.recv(1024).decode()
     #act as echo server

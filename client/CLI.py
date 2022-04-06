@@ -1,3 +1,4 @@
+from client.victim import recv_msg
 from rich import print as rprint
 from rich.table import Table
 from rich.prompt import Prompt as prompt
@@ -18,11 +19,11 @@ import generator
 # TODO: conn keepalive
 # sock.ioctl(socket.SIO_KEEPALIVE_VALS, (1, 60000, 30000))
 # Create Client session; listen to server
-server_addr = ('198.21.170.7', 1338)
+server_addr = ('198.21.242.142', 1338)
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 try:
     sock.connect(server_addr)
-    duck = sock.recv(14434).decode()
+    duck = recv_msg(sock).decode()
     print(duck)
     rprint("Connected")
     rprint("Say Something or type quit to exit")

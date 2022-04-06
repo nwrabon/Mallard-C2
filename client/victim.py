@@ -45,7 +45,7 @@ def recvall(sock, n):
 
 try:
     sock.connect(server_addr)
-    duck = sock.recv(14434).decode()
+    duck = recv_msg(sock).decode()
     print(duck)
 except:
     exit(0)
