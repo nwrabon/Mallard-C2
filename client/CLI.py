@@ -18,7 +18,7 @@ import generator
 # TODO: conn keepalive
 # sock.ioctl(socket.SIO_KEEPALIVE_VALS, (1, 60000, 30000))
 # Create Client session; listen to server
-server_addr = ('198.21.170.7', 1338)
+server_addr = ('172.20.10.11', 1338)
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 try:
     sock.connect(server_addr)
