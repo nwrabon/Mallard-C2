@@ -103,10 +103,11 @@ def users_payload():
 def delete_file():
 	data = json.loads(flask.request.data.decode())
 	client = data["client"]
-	filename = data["filename"]
-	msg = f'delete {filename}'
+	file_name = data["file_name"]
+ 
+	msg = f'delete {file_name}'
 
-	if client and filename:
+	if client and file_name:
 		client_sock = [host for host in common.hosts if host[0][0] == client][0][1]
 		if client_sock:
 			common.send_msg(client_sock, msg.encode())

