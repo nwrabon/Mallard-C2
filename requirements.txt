@@ -1,0 +1,5 @@
+clipboard==0.0.4
+Flask==2.0.1
+pyautogui==0.9.53
+PyInstaller==4.10
+rich==12.2.0
