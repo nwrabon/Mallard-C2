@@ -1,5 +1,7 @@
-# CSOC-C2
-A simple C2 server to demo at Clemson Watt Center
+# Mallard-C2
+Originally made to teach the public about c2 servers and how attackers can use them for malicious purposes.  Created to have very visual effects so less tech-savy viewers can easily understand the dangers. 
+
+Demoed at Clemson University Watt Center.
 
 # Install
 pip install -r requirements.txt
