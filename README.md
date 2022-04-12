@@ -14,6 +14,6 @@ pip install -r requirements.txt
 ### Note:
 You may need to disable real time protection on the victim for all payloads to work correctly. 
 
-6. With the victim now connected to the server you can browse the the website located at http://<server_ip>:5000
+6. With the victim now connected to the server you can browse to the website located at http://<server_ip>:5000 on an attacker machine. 
     There will be a list of victims connected and you can run different prankish payloads on the victim.
 
